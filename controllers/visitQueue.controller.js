@@ -1,12 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const visitQueueService = require('../services/visitQueue.service');
+const VisitQueueService = require('../services/visitQueue.service');
 
-const VisitQueue = new VisitQueueService();
+const queueService = new VisitQueueService();
 
 exports.getAllVisitQueues = async (req, res) => {
   try {
-    const visitQueues = await VisitQueue.getAllVisitQueues();
+    const visitQueues = await queueService.getAllVisitQueues();
     res.status(200).json(visitQueues);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -15,14 +13,29 @@ exports.getAllVisitQueues = async (req, res) => {
 
 exports.createVisitQueue = async (req, res) => {
   try {
-    const visitQueueData = req.body;
-    const newVisitQueue = await VisitQueue.createVisitQueue(visitQueueData);
+    const { patientId, room, doctor, description } = req.body;
+    const newVisitQueue = await queueService.createVisitQueue(patientId, room, doctor, description);
     res.status(201).json(newVisitQueue);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Add routes for updating, deleting visit queues, completing visit queues, etc.
+exports.completeVisitQueue = async (req, res) => {
+  try {
+    const { visitQueueId } = req.params;
+    const completedVisitQueue = await queueService.completeVisitQueue(visitQueueId);
+    res.status(200).json(completedVisitQueue);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-module.exports = router;
+exports.getLatestVisitQueue = async (req, res) => {
+  try {
+    const latestVisitQueue = await queueService.getLatestVisitQueue();
+    res.status(200).json(latestVisitQueue);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

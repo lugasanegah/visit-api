@@ -1,7 +1,7 @@
 const VisitQueue = require('../models/visitQueue.model');
 
 class VisitQueueService {
-  async function createVisitQueue(patientId, room, doctor, description) {
+  async createVisitQueue(patientId, room, doctor, description) {
     try {
       // Menghitung jumlah antrian yang sudah ada pada hari ini
       const today = new Date();
@@ -34,7 +34,7 @@ class VisitQueueService {
     }
   }
 
-  async function getAllVisitQueues() {
+  async getAllVisitQueues() {
     try {
       const visitQueues = await VisitQueue.find();
       return visitQueues;
@@ -43,7 +43,7 @@ class VisitQueueService {
     }
   }
 
-  async function completeVisitQueue(visitQueueId) {
+  async completeVisitQueue(visitQueueId) {
     try {
       // Mencari antrian kunjungan berdasarkan ID
       const visitQueue = await VisitQueue.findById(visitQueueId);
@@ -65,7 +65,7 @@ class VisitQueueService {
     }
   };
 
-  async function getLatestVisitQueue() {
+  async getLatestVisitQueue() {
     try {
       // Mengambil antrian kunjungan terbaru dari database berdasarkan waktu pembuatan (createdAt)
       const latestVisitQueue = await VisitQueue.findOne().sort({ createdAt: -1 });
@@ -79,6 +79,5 @@ class VisitQueueService {
   };
 
 }
-
 
 module.exports = VisitQueueService;
