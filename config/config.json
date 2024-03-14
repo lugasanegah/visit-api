@@ -1,0 +1,9 @@
+{
+	"port": 3000,
+	"mongoConnection": "mongodb+srv://lanegah:VEU223QeuGClRe0Y@cluster0.qjcinoz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+	"redis": {
+	  "host": "redis-18954.c325.us-east-1-4.ec2.cloud.redislabs.com",
+	  "port": 18954,
+	  "password": "Sez3SWn90duvFodKSIhnyRniNRlZ2Zow"
+	}
+}
