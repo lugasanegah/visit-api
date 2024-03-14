@@ -8,15 +8,12 @@ const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const patientRoutes = require('./routes/patient.routes');
+const patientRoutes = require('./routes/patient.route');
+const visitQueueRoutes = require('./routes/visitQueue.route');
 
 var app = express();
 
-mongoose.connect(config.mongoConnection, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-}).then(() => {
+mongoose.connect(config.mongoConnection).then(() => {
   console.log('Connected to MongoDB');
 }).catch((error) => {
   console.error('MongoDB connection error:', error);
@@ -47,6 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', patientRoutes);
+app.use('/api', visitQueueRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
