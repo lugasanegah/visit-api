@@ -43,7 +43,7 @@ class VisitQueueService {
     }
   }
 
-  async function completeVisitQueue (visitQueueId) {
+  async function completeVisitQueue(visitQueueId) {
     try {
       // Mencari antrian kunjungan berdasarkan ID
       const visitQueue = await VisitQueue.findById(visitQueueId);
@@ -65,6 +65,18 @@ class VisitQueueService {
     }
   };
 
+  async function getLatestVisitQueue() {
+    try {
+      // Mengambil antrian kunjungan terbaru dari database berdasarkan waktu pembuatan (createdAt)
+      const latestVisitQueue = await VisitQueue.findOne().sort({ createdAt: -1 });
+
+      return latestVisitQueue;
+    } catch (error) {
+      // Menghandle kesalahan jika terjadi
+      console.error('Error while fetching latest visit queue:', error);
+      throw new Error('Failed to get latest visit queue');
+    }
+  };
 
 }
 
